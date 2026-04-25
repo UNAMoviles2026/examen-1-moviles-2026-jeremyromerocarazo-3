@@ -1,0 +1,38 @@
+# Diseño de UI — CoworkingApp
+
+## Estructura de la Interfaz
+
+La interfaz está compuesta por dos pantallas principales
+conectadas mediante navegación con `NavHost`
+
+Componentes Reutilizables
+
+Los siguientes componentes fueron diseñados para ser
+reutilizados en múltiples pantallas:
+
+BottomBar: Aparece en `SpacesScreen` y `SpaceDetailScreen`,
+  recibe el parámetro `currentRoute` para saber qué ítem resaltar.
+
+AppButton: Usado en `SpaceDetailScreen` para el botón de
+  reserva. Puede reutilizarse en cualquier pantalla futura.
+
+SpaceCard: Encapsula toda la presentación de un espacio.
+  Recibe un objeto `CoworkingSpace` y un callback `onCardClick`.
+
+Justificación de la Organización:
+
+La interfaz fue organizada siguiendo el principio
+de separación de responsabilidades:
+
+Las pantallas (Screens) manejan el layout general y
+  el estado de navegación, pero no lógica de negocio.
+
+Los componentes (Components) son piezas pequeñas,
+  reutilizables e independientes.
+
+El tema (Theme) centraliza colores y tipografía para
+  garantizar consistencia visual en toda la app.
+
+Esta separación facilita el mantenimiento: si el diseño de
+una tarjeta cambia, solo se modifica `SpaceCard.kt` y el
+cambio se refleja en toda la app automáticamente.

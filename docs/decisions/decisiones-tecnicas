@@ -1,0 +1,65 @@
+Decisiones Técnicas — CoworkingApp
+
+Propuesta de Integraciones Adicionales
+
+1. Autenticación con OAuth 2.0
+Se recomienda integrar autenticación mediante Google Sign-In
+o un sistema propio con JWT. Esta integración es fundamental
+porque las reservaciones deben estar asociadas a un usuario
+específico. Sin autenticación, cualquier persona podría reservar
+o cancelar espacios de otros usuarios, lo que representa un
+riesgo de seguridad crítico para el sistema.
+
+2. Pagos con Sinpe o PayPal
+El modelo de negocio de la app gira en torno al cobro por hora
+de uso. Integrar una pasarela de pagos como Sinpe permite
+procesar cobros de forma segura directamente desde la app,
+sin redirigir al usuario a sitios externos. Esto mejora la
+experiencia de usuario y aumenta la tasa de conversión de reservas.
+
+3. Notificaciones Push con Firebase Cloud Messaging (FCM)
+Se recomienda enviar notificaciones para confirmar reservas,
+recordar al usuario 30 minutos antes de su reservación y alertar
+sobre cancelaciones o cambios de disponibilidad. Esta integración
+aporta valor porque mantiene al usuario informado sin que tenga
+que abrir la app a cada rato mejorando la retención y
+satisfacción del usuario.
+
+4. Búsqueda y Filtros en Tiempo Real
+Agregar un sistema de búsqueda por nombre, ubicación, capacidad
+y rango de precio mejoraría significativamente la usabilidad
+cuando el catálogo de espacios crezca. Con 5 espacios el
+scroll es suficiente, pero con 100+ espacios el usuario
+necesita filtros para encontrar lo que busca rápidamente.
+========================================================
+
+Mejoras en la Interfaz de Usuario
+
+1. Skeleton Loading
+Actualmente las imágenes cargan desde una carpeta y durante
+la carga la tarjeta puede verse incompleta. Se recomienda
+implementar un efecto de skeleton (placeholder animado gris)
+mientras carga el contenido. Esto mejoraria la percepción de
+velocidad y evita que el usuario piense que la app está rota.
+
+2. Filtros y Ordenamiento
+Agregar un panel de filtros en `SpacesScreen` que permita
+al usuario ordenar por precio, capacidad o disponibilidad.
+Mejoraría la usabilidad ya que el usuario puede encontrar
+el espacio ideal sin recorrer toda la lista.
+
+3. Modo Oscuro
+Implementar un tema oscuro (`darkColorScheme`) que respete
+la configuración del sistema del usuario. El esquema de
+colores actual (blanco y casi negro) facilita esta transición.
+Esta mejora es importante para la comodidad visual en
+ambientes con poca luz y para reducir el consumo de batería
+en pantallas OLED.
+
+4. Animaciones de Transición
+Agregar animaciones suaves al navegar entre `SpacesScreen`
+y `SpaceDetailScreen` con `AnimatedNavHost`. Las transiciones
+abruptas hacen que la app se sienta menos pulida. Una animación
+de entrada desde la derecha (slide) es el estándar de las
+apps modernas de Android y mejora significativamente la
+percepción de calidad de la aplicación.

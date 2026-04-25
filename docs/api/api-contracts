@@ -1,0 +1,82 @@
+API Contracts — CoworkingApp
+
+Endpoint 1 — Crear una reservación
+
+Descripción
+Permite al usuario reservar un espacio de coworking
+para una fecha y horario específico.
+
+Método:** POST
+URL:** `/api/reservations`
+Autenticación:** Bearer Token
+
+Request Body json
+
+{
+  "spaceId": 1,
+  "userId": 42,
+  "date": "2026-05-10",
+  "startTime": "09:00",
+  "endTime": "12:00",
+  "notes": "Necesito proyector disponible"
+}
+ Response json — Éxito (201 Created)
+{
+  "id": 105,
+  "spaceId": 1,
+  "spaceName": "The Hub",
+  "userId": 42,
+  "date": "2026-05-10",
+  "startTime": "09:00",
+  "endTime": "12:00",
+  "totalHours": 3,
+  "totalPrice": 45.00,
+  "status": "CONFIRMED",
+  "createdAt": "2026-04-25T08:30:00Z"
+}
+
+Response json — Error (409 Conflict)
+
+{
+  "error": "SPACE_NOT_AVAILABLE",
+  "message": "El espacio no está disponible en el horario solicitado",
+  "availableSlots": ["13:00-16:00", "17:00-20:00"]
+}
+
+Endpoint 2 — Actualizar disponibilidad de un espacio
+
+Descripción
+Permite al administrador actualizar la disponibilidad
+de un espacio de coworking.
+
+Método: PUT
+URL: `/api/spaces/{id}/availability`
+Autenticación:** Bearer Token (solo administradores)
+
+Request Body json
+
+{
+  "isAvailable": false,
+  "reason": "Mantenimiento programado",
+  "unavailableFrom": "2026-05-01",
+  "unavailableUntil": "2026-05-03"
+}
+
+Response json — Éxito (200 OK)
+
+{
+  "id": 1,
+  "name": "The Hub",
+  "isAvailable": false,
+  "reason": "Mantenimiento programado",
+  "unavailableFrom": "2026-05-01",
+  "unavailableUntil": "2026-05-03",
+  "updatedAt": "2026-04-25T10:00:00Z"
+}
+
+Response json — Error (404 Not Found)
+
+{
+  "error": "SPACE_NOT_FOUND",
+  "message": "No existe un espacio con el ID proporcionado"
+}

@@ -1,0 +1,55 @@
+Arquitectura del Sistema — CoworkingApp
+
+Tipo de Aplicación
+
+La aplicación es de tipo nativa para Android Studio, desarrollada
+con Kotlin y Jetpack Compose en est caso se eligió este enfoque porque
+el sistema requiere de acceso directo a componentes del dispositivo,
+alto rendimiento en la interfaz y una experiencia de usuario fluida
+y consistente con las guías de diseño de Android (Material Design 3).
+
+Una aplicación híbrida no sería adecuada en este contexto porque
+sacrifica mucho rendimiento y experiencia de usuario estos son aspectos críticos
+en una app de reservas donde la navegación y la visualización de
+espacios debe ser rápida y responsive.
+
+Patrón de Arquitectura
+
+Se utiliza el patrón MVVM (Model - View - ViewModel) como base
+arquitectónica del sistema puesto que es el recomendado en estos casos y uno
+de los mejores.
+
+Aunque en esta prueba de concepto no se implementa el ViewModel
+completo (ya que no se requiere lógica de negocio real), la
+estructura del código está diseñada para escalar hacia MVVM:
+
+Model: Representado por el data class `CoworkingSpace`,
+  que define la estructura de los datos.
+View: Las pantallas `SpacesScreen` y `SpaceDetailScreen`
+  construidas con Jetpack Compose.
+ViewModel: Capa preparada para manejar el estado de la UI
+  y la comunicación con el repositorio de datos.
+
+Justificación Técnica
+
+MVVM fue seleccionado por las siguientes razones:
+
+1. Separación de responsabilidades: La lógica de negocio queda
+   separada de la interfaz, lo que facilita el mantenimiento.
+2. Escalabilidad: Permite agregar nuevas funcionalidades sin
+   modificar las pantallas existentes.
+3. Compatibilidad con Jetpack:** MVVM es el patrón oficial
+   recomendado por Google para aplicaciones Android con Compose.
+4. Testabilidad: Al separar la lógica del ViewModel, es posible
+   escribir pruebas unitarias sin depender de la UI.
+
+Flujo General del Sistema
+
+1. El usuario abre la app → `MainActivity` carga `CoworkingApp`
+2. `CoworkingApp` aplica el tema visual y lanza `AppNavHost`
+3. `AppNavHost` muestra `SpacesScreen` como pantalla inicial
+4. `SpacesScreen` carga la lista de espacios desde el mock data
+5. El usuario toca una tarjeta → navega a `SpaceDetailScreen`
+6. `SpaceDetailScreen` muestra la información completa del espacio
+7. El usuario presiona "Reserve Space" → acción de reserva (simulada)
+8. El usuario presiona atrás → regresa a `SpacesScreen`
