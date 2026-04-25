@@ -4,3 +4,64 @@ Arquitectura Backend por Capas
 
 El backend del sistema sigue una arquitectura de tres capas
 basada en el patrón estándar de aplicaciones empresariales:
+
+Responsabilidad de Cada Capa
+
+Controller
+Es el punto de entrada del backend. Recibe las peticiones HTTP 
+del cliente Android, valida el formato de los datos entrantes y 
+delega el procesamiento al Service. No contiene lógica de negocio.
+
+Ejemplo: `SpaceController` recibe un POST para crear una reserva 
+y llama a `SpaceService.createReservation()`.
+
+Service
+Contiene toda la lógica de negocio del sistema. Valida reglas 
+como disponibilidad del espacio, conflictos de horario y 
+autenticación del usuario. Se comunica con el Repository para 
+leer o escribir datos.
+
+Ejemplo: `SpaceService` verifica que el espacio esté disponible 
+en el horario solicitado antes de confirmar la reserva.
+
+Repository
+Es la capa que abstrae el acceso a la base de datos. Contiene 
+las consultas SQL o llamadas al ORM. El Service nunca accede 
+directamente a la base de datos — siempre pasa por el Repository.
+
+Ejemplo: `SpaceRepository.findAvailableSpaces()` ejecuta la 
+consulta y devuelve la lista de espacios disponibles.
+
+Flujo de una Petición
+
+Cuando el usuario presiona "Reserve Space" en la app, 
+el flujo completo es:
+
+App Android
+→ Envía POST /api/reservations con los datos de la reserva
+Controller (SpaceController)
+→ Recibe la petición HTTP
+→ Valida que el body tenga el formato correcto
+→ Llama a SpaceService.createReservation()
+Service (SpaceService)
+→ Verifica que el espacio exista
+→ Verifica que el espacio esté disponible en ese horario
+→ Calcula el precio total
+→ Llama a ReservationRepository.save()
+Repository (ReservationRepository)
+→ Ejecuta INSERT en la base de datos
+→ Devuelve la reserva creada al Service
+Service
+→ Devuelve la reserva al Controller
+Controller
+→ Responde con HTTP 201 Created + datos de la reserva
+App Android
+→ Muestra confirmación al usuario
+
+Justificación
+
+Esta arquitectura en capas fue seleccionada porque:
+- Permite modificar la base de datos sin afectar la lógica de negocio
+- Facilita escribir pruebas unitarias por capa
+- Es el estándar de la industria para APIs REST con Spring Boot o Node.js
+- Escala horizontalmente sin romper la estructura existente
