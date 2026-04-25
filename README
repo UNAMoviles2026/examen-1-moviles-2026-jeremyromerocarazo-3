@@ -2,4 +2,10 @@ Aplicación móvil nativa para Android desarrollada con Jetpack Compose
 que permite a los usuarios explorar y reservar espacios de coworking
 disponibles.
 
+
+ATENTCION
+Se hicieron cambios en las versiones AGP de grable si el programa no funciona o pide librerias mas antiguas esta puede ser la causa
+Esto se hixo debido a que solo podia realizar el programa con estas librerias puesto que con AGP 9.1.1 Daba error y no funcionaba
+Favor de cambiar estas version de AGP 9.1.1 a AGP 9.0.0 Si llega a dar problemas
+
 Estudiante: Jeremy Romero Carazo
